@@ -144,7 +144,6 @@ textarea:focus {
             }
     
             if (char.length + 1/*length for"\\" or "\""*/ > current_line_length) {
-                console.log(i,current_line_length)
                 //new line
                 current_line_length = line_length;
                 line_count++;
@@ -155,6 +154,10 @@ textarea:focus {
                     ret+="press to code\n"
                     ret+=new_board_starting_line
                     current_line_length-=new_board_starting_line.length;
+                    if(current_line_length<char.length) { //the start_of_the_board part took up too much space
+                        current_line_length = line_length;
+                        ret+="\n"
+                    }
                 } else { //ordinary new line
                     //adding a \ before the new line allows the quoted string to continue to the new line
                     ret+="\\"+"\n"
@@ -187,12 +190,16 @@ textarea:focus {
 
     //returns text specially formatted to bypass the stupid filter
     function do_anti_filter(text) {
-        const filtered_text=["tit","xxx",".com","http"]
+        const filtered_text=["tit","xxx",".com","http","arse"];
         for(ft of filtered_text) {
-            let i=text.toLowerCase().indexOf(ft);
-            if(i==-1)break;
-            //specifically modify the value of the second character in the filtered text
-            text=text.substring(0,i+1)+"\\u{"+text.charCodeAt(i+1).toString(16)+"}"+text.substring(i+2);
+            while(true) {
+                let i=text.toLowerCase().indexOf(ft);
+                if(i==-1) {
+                    break;
+                }
+                //specifically modify the value of the second character in the filtered text
+                text=text.substring(0,i+1)+"\\u{"+text.charCodeAt(i+1).toString(16)+"}"+text.substring(i+2);
+            }
         }
         return text;
     }
@@ -211,7 +218,7 @@ textarea:focus {
 </head>
 <body>
     <div class="container">
-        <h1>Code Formatter Tool v0.33 - <abbr title="generates code for multiple boards"> Long Code Edition </abbr></h1>
+        <h1>Code Formatter Tool v0.3.4 - <abbr title="generates code for multiple boards"> Long Code Edition </abbr></h1>
         <h2>(for press to code boards)</h2>
         <div class="form-group">
             <label for="input">Input Code:</label>

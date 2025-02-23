@@ -156,7 +156,7 @@ textarea:focus {
                     current_line_length-=new_board_starting_line.length;
                     if(current_line_length<char.length) { //the start_of_the_board part took up too much space
                         current_line_length = line_length;
-                        ret+="\n"
+                        ret+="\\\n"
                     }
                 } else { //ordinary new line
                     //adding a \ before the new line allows the quoted string to continue to the new line
@@ -164,6 +164,9 @@ textarea:focus {
                     //example
                     "first line\
                     second line"
+                }
+                if(char==" ") { //bloxd.io boards have trouble parsing space in a new line
+                    char=`"+" ` //forcely put the space after some character
                 }
                 
             }
@@ -190,7 +193,7 @@ textarea:focus {
 
     //returns text specially formatted to bypass the stupid filter
     function do_anti_filter(text) {
-        const filtered_text=["tit","xxx",".com","http","arse"];
+        const filtered_text=["tit","xxx",".com","http","arse","dic"];
         for(ft of filtered_text) {
             while(true) {
                 let i=text.toLowerCase().indexOf(ft);
@@ -218,7 +221,7 @@ textarea:focus {
 </head>
 <body>
     <div class="container">
-        <h1>Code Formatter Tool v0.3.4 - <abbr title="generates code for multiple boards"> Long Code Edition </abbr></h1>
+        <h1>Code Formatter Tool v0.3.5 - <abbr title="generates code for multiple boards"> Long Code Edition </abbr></h1>
         <h2>(for press to code boards)</h2>
         <div class="form-group">
             <label for="input">Input Code:</label>

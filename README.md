@@ -1,7 +1,7 @@
 # Board Formatter
 automatically formats your code for press to code boards/code blocks/books in [bloxd.io](bloxd.io)
 
-current version: 0.3.7
+current version: 0.3.8
 
 To Format Code For Code Blocks, Go To [Code Block Edition](https://sulfrox.github.io/BoardFormatter/block-edition.html)
 

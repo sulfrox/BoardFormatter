@@ -193,7 +193,7 @@ textarea:focus {
 
     //returns text specially formatted to bypass the stupid filter
     function do_anti_filter(text) {
-        const filtered_text=["tit","xxx",".com","http","arse","dic"];
+        const filtered_text=["tit","xxx",".com","http","arse","dic","as"];
         for(ft of filtered_text) {
             while(true) {
                 let i=text.toLowerCase().indexOf(ft);
@@ -221,7 +221,7 @@ textarea:focus {
 </head>
 <body>
     <div class="container">
-        <h1>Code Formatter v0.3.7 - <abbr title="generates code for one code block">Code Block Edition</abbr> </h1>
+        <h1>Code Formatter v0.3.8 - <abbr title="generates code for one code block">Code Block Edition</abbr> </h1>
         <h2>(for code blocks)</h2>
         <h2>Go Back To <a href="https://sulfrox.github.io/BoardFormatter/index.html" style="color:green">Index</a> To Format Code On Other Writables</h2>
         <div class="form-group">

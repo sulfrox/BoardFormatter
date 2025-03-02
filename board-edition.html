@@ -193,7 +193,7 @@ textarea:focus {
 
     //returns text specially formatted to bypass the stupid filter
     function do_anti_filter(text) {
-        const filtered_text=["tit","xxx",".com","http","arse","dic"];
+        const filtered_text=["tit","xxx",".com","http","arse","dic","as"];
         for(ft of filtered_text) {
             while(true) {
                 let i=text.toLowerCase().indexOf(ft);

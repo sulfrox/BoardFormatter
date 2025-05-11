@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<!-- saved from url=(0037)https://cyaben.github.io/test/format/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Formatter Tool</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+body {
+    font-family: 'Inter', sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #1a1a1a;
+    line-height: 1.6;
+    color: #f8c8dc;
+    background-image: linear-gradient(45deg, rgba(255, 182, 193, 0.1) 25%, transparent 25%, transparent 50%, rgba(255, 182, 193, 0.1) 50%, rgba(255, 182, 193, 0.1) 75%, transparent 75%, transparent);
+    background-size: 40px 40px;
+}
+
+.container {
+    background: #2a2a2a;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(255, 192, 203, 0.2);
+    padding: 30px;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.container:hover {
+    box-shadow: 0 8px 20px rgba(255, 192, 203, 0.3);
+}
+
+h1 {
+    text-align: center;
+    color: #ffb6c1;
+    font-weight: 600;
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px rgba(255, 182, 193, 0.6);
+}
+
+h2 {
+    text-align: center;
+    color: #ffb6c1;
+    /* font-weight: 600; */
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px rgba(255, 182, 193, 0.6);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #f8c8dc;
+    font-weight: 500;
+}
+
+textarea {
+    width: 96.5%;
+    padding: 12px;
+    border: 1px solid #ffb6c1;
+    border-radius: 6px;
+    resize: vertical;
+    min-height: 150px;
+    font-size: 16px;
+    background-color: #333;
+    color: #f8c8dc;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea:focus {
+    border-color: #ff99aa;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255, 153, 170, 0.6);
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.btn {
+    background: linear-gradient(135deg, #ff8fa3, #ff5e78);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 10px rgba(255, 94, 120, 0.6);
+}
+
+.btn:hover {
+    background: linear-gradient(135deg, #ff5e78, #ff2a4a);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(255, 42, 74, 0.8);
+}
+
+.anti-filter {
+    display: flex;
+    align-items: center;
+}
+
+.anti-filter label {
+    margin-left: 10px;
+    margin-bottom: 0;
+    font-weight: 500;
+    color: #f8c8dc;
+}
+
+.anti-filter input {
+    margin-right: 10px;
+    vertical-align: middle;
+    zoom: 1.5;
+}
+
+    </style>
+    <script>
+    
+    //returns text specially formatted to bypass the stupid filter
+    function do_anti_filter(text, censored_text) {
+        if(text.length!==censored_text.length) {
+            alert("Your original code should have the same length as sensored code");
+            return "";
+        }
+        let ret = "";
+        let a_code = 'a'.charCodeAt(0);
+        let z_code = 'z'.charCodeAt(0);
+        let A_code = 'A'.charCodeAt(0);
+        let Z_code = 'Z'.charCodeAt(0);
+        for(let i=0;i<text.length;i++) {
+            //filtered, and is a letter
+            let code = text.charCodeAt(i);
+            if(censored_text[i]==="*" && ( (a_code<=code && code<=z_code) || 
+                (A_code<=code && code<=Z_code) )) {
+                ret+='\\u{'+code.toString(16)+'}';
+            } else {
+                ret+=text[i];
+            }
+        }
+        return ret;
+    }
+
+    function FormatNow() {
+        let text = document.getElementById("input").value;
+        let censored_text = document.getElementById("filtered").value;
+        text = do_anti_filter(text, censored_text)
+        document.getElementById("output").value=text;
+    }
+    
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Code Formatter v0.3.10 - <abbr title="combats bloxd.io filter">Anti-Filter Special Edition</abbr> </h1>
+        <h2>(for code blocks and world code)</h2>
+        <h2>Go Back To <a href="BoardFormatter/index.html" style="color:green">Index</a> To Format Code On Other Writables</h2>
+        <div class="form-group">
+            <label for="input">Input Code:</label>
+            <textarea id="input"  placeholder="Paste your code here..."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="input">Input Filtered Code:</label>
+            <textarea id="filtered"  placeholder="The code after bloxd.io has censored it..."></textarea>
+        </div>
+        <div class="form-group">
+            <label for="output">Formatted Output:</label>
+            <textarea id="output" placeholder="Formatted code will appear here..."></textarea>
+        </div>
+        <div class="controls">
+            <button class="btn" onclick="FormatNow()">Format Code</button>
+        </div>
+    </div>
+    <footer style="text-align: center; padding: 20px; color: #666; font-size: 14px; margin-top: 20px;">
+        JavaScript Created by Sulfrox. UI Created by A_I_X.
+    </footer>
+
+
+</body></html>
